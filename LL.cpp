@@ -93,8 +93,39 @@ void LL::reverse(expression* N){
     }
 }
 
-void LL::delatbeg(){
-    
+int LL::search(int numb, expression* h){
+    if(h == nullptr){
+        return -999;
+    }else if(h->evalExpression == numb){
+        return 0;
+    }else{
+        return 1 + search(numb, h->next);
+    }
+}
+
+bool LL::del(int index, expression* h){
+    if(isempty()){
+        return false;
+    }else if(index < 0){
+        return false;
+    }else if(index == 0 && h == head){
+        head = h->next;
+        delete h;
+        return true;
+    }else if(index == 1 && h->next == tail){
+        tail = h;
+        tail->next = nullptr;
+        h = h->next;
+        delete h ;
+        return true;
+    }else if(index == 1){
+        expression* temp = h->next;
+        h->next = h->next->next;
+        delete temp;
+        return true;
+    }else if(index > 1){
+        del(index - 1, h->next);
+    }
 }
 
 expression* LL::getHead(){

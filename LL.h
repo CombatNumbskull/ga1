@@ -22,7 +22,8 @@ class LL{
         void printList(ofstream& outputFile, expression* N);
         void printPasscode(ofstream& outputFile, expression* N);
         void reverse(expression* N);
-        void delatbeg();
+        bool del(int index, expression* h);
+        int search(int numb, expression* h);
         expression* getHead();
         expression* getTail();
 };

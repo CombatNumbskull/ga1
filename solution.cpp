@@ -14,6 +14,7 @@ int operation(char op, int n1, int n2);
 
 
 int invalid = 0;
+bool invalidFlag = false;
 
 int main(int argc, char *argv[]){
     
@@ -21,11 +22,11 @@ int main(int argc, char *argv[]){
     string infilename = am.get("input");
     string outfilename = am.get("output");
 
-//    ifstream inputFile("input12.txt");
-//    ofstream outputFile("output12.txt");
+//    ifstream inputFile("input13.txt");
+//    ofstream outputFile("output13.txt");
 
     ifstream inputFile(infilename);
-   ofstream outputFile(outfilename);
+    ofstream outputFile(outfilename);
 
     if (!inputFile.is_open()){
         outputFile << "Error opening input file.";
@@ -70,15 +71,26 @@ int main(int argc, char *argv[]){
             }
         }
     }
-    
+
+    while(!negativeNumb.empty()){
+        numb = negativeNumb.top();
+        negativeNumb.pop();
+        if(!Sarah.del(Sarah.search(numb * -1, Sarah.getHead()),Sarah.getHead())){
+            Alex.del(Alex.search(numb*-1, Alex.getHead()), Alex.getHead());
+        }
+    }
+
+    LL mergeList;
+    mergeList.merge(Sarah.getHead(), Alex.getHead());
+    if(invalidFlag)
+        mergeList.del(invalid ,mergeList.getHead());
+    mergeList.reverse(mergeList.getHead());
+
     outputFile << "Sarah: [";
     Sarah.printList(outputFile, Sarah.getHead());
     outputFile << "Alex: [";
     Alex.printList(outputFile,Alex.getHead());
 
-    LL mergeList;
-    mergeList.merge(Sarah.getHead(), Alex.getHead());
-    mergeList.reverse(mergeList.getHead());
 
     outputFile << "Decoded passcode: | ";
     mergeList.printPasscode(outputFile, mergeList.getHead());
@@ -122,6 +134,7 @@ bool balance(string line){
             case ')':
                 if(s.top() != '('){
                     invalid++;
+                    invalidFlag = true;
                     return false;
                 }
                 s.pop();
@@ -129,6 +142,7 @@ bool balance(string line){
             case ']':
                 if(s.top() != '['){
                     invalid++;
+                    invalidFlag = true;
                     return false;
                 }
                 s.pop();
@@ -136,6 +150,7 @@ bool balance(string line){
             case '}':
                 if(s.top() != '{'){
                     invalid++;
+                    invalidFlag = true;
                     return false;
                 }
                 s.pop();
@@ -144,8 +159,11 @@ bool balance(string line){
                 break;
         }
     }
-    if(!s.empty())
+    if(!s.empty()){
+        invalid++;
+        invalidFlag = true;
         return false;
+    }
     return true;
 }
 
