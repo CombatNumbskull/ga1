@@ -15,9 +15,14 @@ class LL{
         expression* tail;
     public:
         LL();
-        void insertatend(string ex, expression* N);
+        void insertatend(string ex,int numb, expression* N);
+        void merge(expression* headOfFirst, expression* headOfSecond);
 
         bool isempty();
-        void print(ofstream& outputFile, expression* N);
+        void printList(ofstream& outputFile, expression* N);
+        void printPasscode(ofstream& outputFile, expression* N);
+        void reverse(expression* N);
+        void delatbeg();
         expression* getHead();
+        expression* getTail();
 };
